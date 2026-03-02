@@ -1,4 +1,4 @@
-# IssueForge Test
+# IssueForge
 
 **One command. Every AI tool. Any repo.**
 
