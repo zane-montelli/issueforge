@@ -1,0 +1,40 @@
+# {{repoName}} — Copilot Instructions
+
+**Repository:** `{{repo}}`{{#if project}}
+**Project Board:** {{project}}{{/if}}
+
+## Project Areas
+
+{{#each areas}}
+- **{{name}}** (`{{path}}/`) — {{stack}}
+{{/each}}
+
+## GitHub Issue Labels
+
+When creating or referencing issues in `{{repo}}`, use these labels:
+
+**Type** (pick one):
+{{#each labels.types}}
+- `{{this}}`
+{{/each}}
+
+**Area** (pick one):
+{{#each labels.areas}}
+- `{{this}}`
+{{/each}}
+
+**Priority** (pick one):
+{{#each labels.priorities}}
+- `{{this}}`
+{{/each}}
+
+**Emoji prefix by type:**
+{{#each emojiEntries}}
+- `{{label}}` → {{emoji}}
+{{/each}}
+
+## Creating Issues
+
+Use `gh issue create --repo {{repo}}` with the appropriate labels. Auth via `gh auth login` — no token files needed. Always explore the codebase for relevant file paths and line numbers before writing the issue body.
+
+Alternatively, run `npx issueforge issue` in the terminal for an interactive wizard.

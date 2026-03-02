@@ -1,0 +1,51 @@
+{
+  "name": "issueforge",
+  "version": "0.1.0",
+  "description": "Scaffold AI coding tool context files and GitHub issue creation for any repository",
+  "type": "module",
+  "bin": {
+    "issueforge": "dist/bin/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "biome check src",
+    "lint:fix": "biome check --write src",
+    "format": "biome format --write src",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "opencode",
+    "cursor",
+    "claude",
+    "copilot",
+    "windsurf",
+    "github",
+    "issues",
+    "cli",
+    "scaffold"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "commander": "^12.1.0",
+    "execa": "^9.5.2",
+    "handlebars": "^4.7.8",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}

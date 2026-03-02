@@ -1,0 +1,28 @@
+---
+activation: always
+---
+
+# {{repoName}} — Shared Context
+
+**GitHub:** `{{repo}}`{{#if project}}
+**Project Board:** {{project}}{{/if}}
+
+## Project Areas
+
+{{#each areas}}
+- **{{name}}** (`{{path}}/`) — {{stack}}
+{{/each}}
+
+## GitHub Issue Labels
+
+**Type:** {{#each labels.types}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+**Area:** {{#each labels.areas}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+**Priority:** {{#each labels.priorities}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+## Creating Issues
+
+Run `npx issueforge issue` or use `gh issue create --repo {{repo}}` with the appropriate labels.
+
+Auth: `gh auth login` — no token files needed.

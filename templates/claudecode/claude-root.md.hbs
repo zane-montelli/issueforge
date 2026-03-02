@@ -1,0 +1,38 @@
+# {{repoName}}
+
+**GitHub:** `{{repo}}`{{#if project}}
+**Project Board:** {{project}}{{/if}}
+
+## Project Areas
+
+{{#each areas}}
+- **{{name}}** (`{{path}}/`) — {{stack}}
+{{/each}}
+
+## Creating GitHub Issues
+
+When asked to create an issue, use `gh issue create` targeting `{{repo}}`.
+
+**Labels:**
+
+Type: {{#each labels.types}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+Area: {{#each labels.areas}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+Priority: {{#each labels.priorities}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+**Emoji prefix by type:**
+{{#each emojiEntries}}
+- `{{label}}` → {{emoji}}
+{{/each}}
+
+Always explore the codebase to include relevant file paths and line numbers in the issue body.
+
+Auth: `gh auth login` — no `.env.local` required.
+
+## Memory
+
+Import area-specific context when working in a specific directory:
+{{#each areas}}
+- `@{{path}}/AGENTS.md` for {{name}} context
+{{/each}}

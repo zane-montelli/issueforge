@@ -1,0 +1,58 @@
+---
+description: Create a GitHub issue for {{repoName}}
+---
+
+Create a GitHub issue for **{{repoName}}** by following these steps exactly.
+
+## Step 1 — Gather inputs
+
+Ask the user for the following (one at a time if not already provided as arguments):
+
+1. **Title** — a short, descriptive title (do not include an emoji yet)
+2. **Type label** — choose exactly one:
+{{#each labels.types}}
+   - `{{this}}`
+{{/each}}
+3. **Area label** — choose exactly one:
+{{#each labels.areas}}
+   - `{{this}}`
+{{/each}}
+4. **Priority** — choose one (or skip):
+{{#each labels.priorities}}
+   - `{{this}}`
+{{/each}}
+5. **Body** — ask the user to describe the issue. Explore the codebase to include relevant file paths and line numbers in the body.
+
+## Step 2 — Prepend emoji to title
+
+Based on the Type label chosen, prepend the matching emoji:
+{{#each emojiEntries}}
+- `{{label}}` → {{emoji}}
+{{/each}}
+
+## Step 3 — Create the issue
+
+Run the following command (gh CLI uses your stored auth — no token needed):
+
+```bash
+gh issue create \
+  --repo {{repo}} \
+  --title "<emoji + title>" \
+  --body "<body>" \
+  --label "<type label>" \
+  --label "<area label>"{{#if project}} \
+  --project "{{project}}"{{/if}}
+```
+
+Add `--label "<priority label>"` if a priority was chosen.
+
+## Step 4 — Confirm
+
+Output the issue URL and number once created.
+
+---
+
+**Notes:**
+- All issues always go to `{{repo}}`
+- Use `gh auth login` if not already authenticated — no `.env.local` needed
+- Before writing the body, explore relevant code to include specific file paths and line numbers

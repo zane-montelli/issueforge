@@ -1,0 +1,23 @@
+---
+activation: glob
+glob: "{{area.path}}/**"
+---
+
+# {{area.name}} — {{area.stack}}
+
+**Directory:** `{{area.path}}/`
+
+## Stack
+
+{{area.stack}}
+
+## Build & Run
+
+```bash
+# From {{area.path}}/
+{{buildCommands}}
+```
+
+## Code Style
+
+<!-- TODO: add {{area.name}}-specific conventions, patterns, and rules -->
