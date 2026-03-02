@@ -104,7 +104,7 @@ export async function runWizard(rootDir: string): Promise<void> {
   // ── Build config ────────────────────────────────────────────────────────────
   const config: IssueForgeConfig = {
     repo: repo.trim(),
-    project: project.trim(),
+    project: (project ?? "").trim(),
     areas,
     labels,
     emojiMap: DEFAULT_EMOJI_MAP,
