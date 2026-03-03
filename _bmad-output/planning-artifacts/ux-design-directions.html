@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IssueForge — Design Direction Showcase</title>
+<style>
+  :root {
+    --primary: #5B6CF0;
+    --primary-hover: #4A5BE0;
+    --primary-subtle: #EEF0FE;
+    --ai: #A78BFA;
+    --success: #22C55E;
+    --error: #EF4444;
+    --warning: #F59E0B;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Inter", system-ui, sans-serif; background: #0A0B0F; color: #E8EAF0; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 100; background: #0A0B0F; border-bottom: 1px solid #1E2335; display: flex; gap: 0; overflow-x: auto; padding: 0 24px; }
+  .nav-btn { padding: 14px 18px; font-size: 13px; color: #8B93A8; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: all .15s; }
+  .nav-btn:hover { color: #E8EAF0; }
+  .nav-btn.active { color: #5B6CF0; border-bottom-color: #5B6CF0; }
+
+  /* SECTIONS */
+  .section { display: none; padding: 48px 32px; max-width: 1200px; margin: 0 auto; }
+  .section.active { display: block; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #5B6CF0; margin-bottom: 8px; }
+  .section-title { font-size: 22px; font-weight: 700; color: #E8EAF0; margin-bottom: 6px; }
+  .section-desc { font-size: 14px; color: #8B93A8; margin-bottom: 40px; max-width: 600px; line-height: 1.6; }
+
+  /* DIRECTION CARDS */
+  .dir-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  .dir-card { border-radius: 12px; overflow: hidden; border: 1px solid #1E2335; }
+  .dir-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 12px; }
+
+  /* ─── DIRECTION 1: Focused Chat ─── */
+  .d1 { background: #FFFFFF; color: #0F1117; }
+  .d1-header { background: #F5F6FA; border-bottom: 1px solid #E2E5EE; padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .d1-logo { font-size: 14px; font-weight: 700; color: #5B6CF0; }
+  .d1-repo { font-size: 12px; color: #5A6278; background: #EEF0FE; padding: 4px 10px; border-radius: 4px; }
+  .d1-body { padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .d1-step { font-size: 12px; color: #9BA3B8; margin-bottom: 8px; }
+  .d1-question { font-size: 18px; font-weight: 500; color: #0F1117; text-align: center; max-width: 520px; margin-bottom: 24px; line-height: 1.5; }
+  .d1-why { font-size: 12px; color: #5B6CF0; cursor: pointer; margin-bottom: 24px; }
+  .d1-input { width: 100%; max-width: 520px; padding: 14px 16px; border: 1.5px solid #E2E5EE; border-radius: 8px; font-size: 15px; color: #0F1117; outline: none; }
+  .d1-input:focus { border-color: #5B6CF0; box-shadow: 0 0 0 3px #EEF0FE; }
+  .d1-btn { margin-top: 16px; background: #5B6CF0; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .d1-progress { display: flex; gap: 6px; margin-top: 32px; }
+  .d1-dot { width: 8px; height: 8px; border-radius: 50%; background: #E2E5EE; }
+  .d1-dot.done { background: #5B6CF0; }
+  .d1-dot.active { background: #5B6CF0; box-shadow: 0 0 0 3px #EEF0FE; }
+
+  /* ─── DIRECTION 2: Two-Zone Sidebar ─── */
+  .d2 { background: #FFFFFF; color: #0F1117; display: flex; }
+  .d2-sidebar { width: 220px; background: #F5F6FA; border-right: 1px solid #E2E5EE; padding: 20px 16px; flex-shrink: 0; }
+  .d2-sidebar-logo { font-size: 14px; font-weight: 700; color: #5B6CF0; margin-bottom: 20px; }
+  .d2-sidebar-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9BA3B8; margin-bottom: 8px; }
+  .d2-sidebar-repo { font-size: 13px; color: #0F1117; background: #EEF0FE; padding: 8px 10px; border-radius: 6px; margin-bottom: 16px; }
+  .d2-step-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 6px; font-size: 13px; color: #5A6278; margin-bottom: 2px; }
+  .d2-step-item.active { background: #EEF0FE; color: #5B6CF0; font-weight: 500; }
+  .d2-step-item.done { color: #22C55E; }
+  .d2-step-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+  .d2-main { flex: 1; padding: 32px; }
+  .d2-q-label { font-size: 11px; color: #9BA3B8; margin-bottom: 6px; }
+  .d2-q-text { font-size: 17px; font-weight: 500; color: #0F1117; margin-bottom: 6px; line-height: 1.5; }
+  .d2-q-why { font-size: 12px; color: #5B6CF0; cursor: pointer; margin-bottom: 20px; }
+  .d2-input { width: 100%; padding: 12px 14px; border: 1.5px solid #E2E5EE; border-radius: 8px; font-size: 14px; color: #0F1117; outline: none; }
+  .d2-actions { margin-top: 16px; display: flex; gap: 10px; }
+  .d2-btn-primary { background: #5B6CF0; color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .d2-btn-secondary { background: none; color: #5A6278; border: 1px solid #E2E5EE; padding: 10px 18px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+
+  /* ─── DIRECTION 3: Dark Developer ─── */
+  .d3 { background: #0F1117; color: #E8EAF0; display: flex; }
+  .d3-sidebar { width: 200px; background: #161B27; border-right: 1px solid #2A3348; padding: 18px 14px; flex-shrink: 0; }
+  .d3-logo { font-size: 13px; font-weight: 700; color: #7B8FF5; margin-bottom: 18px; }
+  .d3-repo { font-size: 12px; color: #8B93A8; padding: 7px 10px; border-radius: 6px; border: 1px solid #2A3348; margin-bottom: 14px; font-family: monospace; }
+  .d3-step { font-size: 12px; color: #4A5268; padding: 6px 8px; border-radius: 5px; margin-bottom: 2px; display: flex; align-items: center; gap: 7px; }
+  .d3-step.active { color: #7B8FF5; background: #1E2140; }
+  .d3-step.done { color: #22C55E; }
+  .d3-main { flex: 1; padding: 28px 32px; }
+  .d3-q-num { font-size: 11px; color: #4A5268; font-family: monospace; margin-bottom: 4px; }
+  .d3-q-text { font-size: 16px; color: #E8EAF0; margin-bottom: 4px; line-height: 1.5; }
+  .d3-q-why { font-size: 11px; color: #A78BFA; cursor: pointer; margin-bottom: 18px; }
+  .d3-input { width: 100%; padding: 10px 12px; background: #161B27; border: 1px solid #2A3348; border-radius: 6px; font-size: 13px; color: #E8EAF0; outline: none; font-family: inherit; }
+  .d3-hint { font-size: 11px; color: #4A5268; margin-top: 6px; font-family: monospace; }
+  .d3-btn { margin-top: 14px; background: #7B8FF5; color: #fff; border: none; padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ─── DIRECTION 4: Card-Step Wizard ─── */
+  .d4 { background: #F5F6FA; color: #0F1117; padding: 32px; }
+  .d4-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .d4-logo { font-size: 14px; font-weight: 700; color: #5B6CF0; }
+  .d4-stepper { display: flex; align-items: center; gap: 0; }
+  .d4-step-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #9BA3B8; }
+  .d4-step-item.active { color: #5B6CF0; font-weight: 600; }
+  .d4-step-item.done { color: #22C55E; }
+  .d4-step-num { width: 22px; height: 22px; border-radius: 50%; background: #E2E5EE; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+  .d4-step-item.active .d4-step-num { background: #5B6CF0; color: #fff; }
+  .d4-step-item.done .d4-step-num { background: #22C55E; color: #fff; }
+  .d4-step-sep { width: 24px; height: 1px; background: #E2E5EE; margin: 0 4px; }
+  .d4-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 4px rgba(0,0,0,.06); max-width: 600px; margin: 0 auto; }
+  .d4-card-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9BA3B8; margin-bottom: 8px; }
+  .d4-card-q { font-size: 18px; font-weight: 600; color: #0F1117; margin-bottom: 6px; line-height: 1.4; }
+  .d4-card-context { font-size: 13px; color: #5A6278; margin-bottom: 20px; line-height: 1.5; padding: 10px 12px; background: #F5F6FA; border-radius: 6px; border-left: 3px solid #5B6CF0; }
+  .d4-input { width: 100%; padding: 12px 14px; border: 1.5px solid #E2E5EE; border-radius: 8px; font-size: 14px; color: #0F1117; outline: none; }
+  .d4-actions { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .d4-skip { font-size: 13px; color: #9BA3B8; cursor: pointer; }
+  .d4-btn { background: #5B6CF0; color: #fff; border: none; padding: 11px 26px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+  /* ─── DIRECTION 5: Minimal Zen ─── */
+  .d5 { background: #FFFFFF; color: #0F1117; padding: 48px; display: flex; flex-direction: column; align-items: center; }
+  .d5-logo { font-size: 13px; font-weight: 700; color: #5B6CF0; margin-bottom: 48px; letter-spacing: .04em; }
+  .d5-progress { display: flex; gap: 4px; margin-bottom: 48px; }
+  .d5-bar { height: 3px; width: 40px; border-radius: 2px; background: #E2E5EE; }
+  .d5-bar.done { background: #5B6CF0; }
+  .d5-bar.active { background: #5B6CF0; }
+  .d5-q { font-size: 22px; font-weight: 400; color: #0F1117; text-align: center; max-width: 480px; margin-bottom: 32px; line-height: 1.5; }
+  .d5-q strong { font-weight: 600; color: #5B6CF0; }
+  .d5-input { width: 100%; max-width: 480px; border: none; border-bottom: 2px solid #E2E5EE; padding: 12px 0; font-size: 16px; color: #0F1117; outline: none; text-align: center; }
+  .d5-input:focus { border-bottom-color: #5B6CF0; }
+  .d5-hint { font-size: 12px; color: #9BA3B8; margin-top: 8px; text-align: center; }
+  .d5-btn { margin-top: 32px; background: none; color: #5B6CF0; border: 1.5px solid #5B6CF0; padding: 10px 28px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .d5-btn:hover { background: #5B6CF0; color: #fff; }
+
+  /* ─── DIRECTION 6: Dark Minimal ─── */
+  .d6 { background: #0F1117; color: #E8EAF0; padding: 48px; display: flex; flex-direction: column; align-items: center; }
+  .d6-logo { font-size: 13px; font-weight: 700; color: #7B8FF5; margin-bottom: 48px; letter-spacing: .04em; }
+  .d6-progress { display: flex; gap: 4px; margin-bottom: 48px; }
+  .d6-bar { height: 2px; width: 40px; border-radius: 2px; background: #2A3348; }
+  .d6-bar.done { background: #7B8FF5; }
+  .d6-bar.active { background: #7B8FF5; }
+  .d6-q { font-size: 20px; font-weight: 400; color: #E8EAF0; text-align: center; max-width: 480px; margin-bottom: 32px; line-height: 1.5; }
+  .d6-q strong { font-weight: 600; color: #A78BFA; }
+  .d6-input { width: 100%; max-width: 480px; background: none; border: none; border-bottom: 1px solid #2A3348; padding: 12px 0; font-size: 15px; color: #E8EAF0; outline: none; text-align: center; font-family: inherit; }
+  .d6-input:focus { border-bottom-color: #7B8FF5; }
+  .d6-hint { font-size: 11px; color: #4A5268; margin-top: 8px; text-align: center; font-family: monospace; }
+  .d6-btn { margin-top: 32px; background: #7B8FF5; color: #fff; border: none; padding: 10px 28px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ─── DIRECTION 7: Review Screen ─── */
+  .d7 { background: #FFFFFF; color: #0F1117; }
+  .d7-header { background: #F5F6FA; border-bottom: 1px solid #E2E5EE; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .d7-logo { font-size: 14px; font-weight: 700; color: #5B6CF0; }
+  .d7-status { font-size: 12px; color: #22C55E; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .d7-status::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: #22C55E; }
+  .d7-body { display: flex; gap: 0; height: 420px; }
+  .d7-preview { flex: 1; padding: 24px; border-right: 1px solid #E2E5EE; overflow-y: auto; }
+  .d7-preview-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9BA3B8; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+  .d7-ai-badge { font-size: 10px; font-weight: 500; color: #A78BFA; background: #F3EFFE; padding: 3px 8px; border-radius: 4px; }
+  .d7-issue-title { font-size: 16px; font-weight: 600; color: #0F1117; margin-bottom: 14px; }
+  .d7-issue-section { margin-bottom: 14px; }
+  .d7-issue-h { font-size: 13px; font-weight: 600; color: #0F1117; margin-bottom: 6px; }
+  .d7-issue-p { font-size: 13px; color: #5A6278; line-height: 1.6; }
+  .d7-issue-code { font-size: 12px; background: #F5F6FA; border: 1px solid #E2E5EE; border-radius: 4px; padding: 8px 10px; font-family: monospace; color: #0F1117; }
+  .d7-sidebar { width: 200px; padding: 20px 16px; }
+  .d7-sidebar-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #9BA3B8; margin-bottom: 10px; }
+  .d7-meta-item { font-size: 12px; color: #5A6278; margin-bottom: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .d7-meta-val { font-weight: 500; color: #0F1117; }
+  .d7-footer { border-top: 1px solid #E2E5EE; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .d7-restart { font-size: 13px; color: #9BA3B8; cursor: pointer; }
+  .d7-actions { display: flex; gap: 10px; }
+  .d7-edit-btn { border: 1px solid #E2E5EE; background: none; color: #5A6278; padding: 9px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .d7-submit-btn { background: #5B6CF0; color: #fff; border: none; padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ─── DIRECTION 8: Dark Review Screen ─── */
+  .d8 { background: #0F1117; color: #E8EAF0; }
+  .d8-header { background: #161B27; border-bottom: 1px solid #2A3348; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .d8-logo { font-size: 13px; font-weight: 700; color: #7B8FF5; }
+  .d8-status { font-size: 11px; color: #22C55E; font-weight: 500; display: flex; align-items: center; gap: 6px; font-family: monospace; }
+  .d8-status::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: #22C55E; }
+  .d8-body { display: flex; gap: 0; height: 420px; }
+  .d8-preview { flex: 1; padding: 24px; border-right: 1px solid #2A3348; overflow-y: auto; }
+  .d8-preview-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #4A5268; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+  .d8-ai-badge { font-size: 10px; font-weight: 500; color: #A78BFA; background: #1E1530; padding: 3px 8px; border-radius: 4px; }
+  .d8-issue-title { font-size: 15px; font-weight: 600; color: #E8EAF0; margin-bottom: 14px; }
+  .d8-issue-h { font-size: 12px; font-weight: 600; color: #E8EAF0; margin-bottom: 5px; }
+  .d8-issue-p { font-size: 12px; color: #8B93A8; line-height: 1.6; margin-bottom: 12px; }
+  .d8-issue-code { font-size: 11px; background: #161B27; border: 1px solid #2A3348; border-radius: 4px; padding: 8px 10px; font-family: monospace; color: #A78BFA; margin-bottom: 12px; }
+  .d8-sources { font-size: 11px; color: #4A5268; font-family: monospace; cursor: pointer; }
+  .d8-sources:hover { color: #A78BFA; }
+  .d8-sidebar { width: 180px; padding: 18px 14px; }
+  .d8-sidebar-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #4A5268; margin-bottom: 10px; font-family: monospace; }
+  .d8-meta-item { font-size: 11px; color: #4A5268; margin-bottom: 8px; font-family: monospace; }
+  .d8-meta-val { color: #8B93A8; }
+  .d8-footer { border-top: 1px solid #2A3348; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .d8-restart { font-size: 12px; color: #4A5268; cursor: pointer; font-family: monospace; }
+  .d8-actions { display: flex; gap: 8px; }
+  .d8-edit-btn { border: 1px solid #2A3348; background: none; color: #8B93A8; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+  .d8-submit-btn { background: #7B8FF5; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+  /* INTRO */
+  .intro { padding: 64px 32px 0; max-width: 800px; margin: 0 auto; }
+  .intro h1 { font-size: 28px; font-weight: 700; color: #E8EAF0; margin-bottom: 8px; }
+  .intro p { font-size: 15px; color: #8B93A8; line-height: 1.7; margin-bottom: 32px; }
+  .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+  .intro-card { background: #161B27; border: 1px solid #1E2335; border-radius: 10px; padding: 18px; }
+  .intro-card h3 { font-size: 13px; font-weight: 600; color: #E8EAF0; margin-bottom: 6px; }
+  .intro-card p { font-size: 12px; color: #8B93A8; line-height: 1.5; }
+
+  /* COMPARISON */
+  .comp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .comp-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #5B6CF0; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('intro')">Overview</button>
+  <button class="nav-btn" onclick="show('d1')">D1 — Focused Chat</button>
+  <button class="nav-btn" onclick="show('d2')">D2 — Two-Zone Light</button>
+  <button class="nav-btn" onclick="show('d3')">D3 — Two-Zone Dark</button>
+  <button class="nav-btn" onclick="show('d4')">D4 — Card Wizard</button>
+  <button class="nav-btn" onclick="show('d5')">D5 — Zen Light</button>
+  <button class="nav-btn" onclick="show('d6')">D6 — Zen Dark</button>
+  <button class="nav-btn" onclick="show('d7')">D7 — Review Light</button>
+  <button class="nav-btn" onclick="show('d8')">D8 — Review Dark</button>
+</nav>
+
+<!-- INTRO -->
+<div id="intro" class="section active">
+  <div class="intro">
+    <div class="section-label">IssueForge</div>
+    <h1>Design Direction Showcase</h1>
+    <p>Eight visual directions exploring different approaches to IssueForge's core clarification loop and issue review screens. Directions 1–6 show the clarification question step. Directions 7–8 show the post-generation review step. All are grounded in the established visual foundation: Forge Blue (#5B6CF0), Geist typeface, 4px base spacing, shadcn/ui components.</p>
+
+    <div class="intro-grid">
+      <div class="intro-card">
+        <h3>Evaluation criteria</h3>
+        <p>Which layout matches how your users think? Which density feels right? Which persona (Sarah vs Marcus) does this serve best?</p>
+      </div>
+      <div class="intro-card">
+        <h3>Light vs. Dark</h3>
+        <p>Non-technical users default to light; developer users default to dark. Both modes are always available — these directions explore each.</p>
+      </div>
+      <div class="intro-card">
+        <h3>What to look for</h3>
+        <p>Visual weight of the question. Prominence of the sidebar. How the "why did you ask this?" disclosure is handled. Overall spaciousness.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D1: Focused Chat (Light) -->
+<div id="d1" class="section">
+  <div class="section-label">Direction 1</div>
+  <div class="section-title">Focused Chat — Light</div>
+  <div class="section-desc">Centred, immersive, no sidebar. The clarifying question is the only thing on screen. Maximum focus for non-technical users; minimal visual noise. Repo context is shown only in the header strip.</div>
+  <div class="dir-tag" style="background:#EEF0FE;color:#5B6CF0;">Non-technical first · Light · No sidebar · Centred</div>
+  <div class="dir-card">
+    <div class="d1">
+      <div class="d1-header">
+        <span class="d1-logo">IssueForge</span>
+        <span class="d1-repo">acme-corp / billing-service</span>
+      </div>
+      <div class="d1-body">
+        <div class="d1-step">Question 2 of 3</div>
+        <div class="d1-question">Does this issue happen for all users, or only for specific account types or plans?</div>
+        <div class="d1-why">↳ Why is IssueForge asking this?</div>
+        <input class="d1-input" type="text" placeholder="Type your answer…" />
+        <button class="d1-btn">Next →</button>
+        <div class="d1-progress">
+          <div class="d1-dot done"></div>
+          <div class="d1-dot active"></div>
+          <div class="d1-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D2: Two-Zone Light -->
+<div id="d2" class="section">
+  <div class="section-label">Direction 2</div>
+  <div class="section-title">Two-Zone — Light</div>
+  <div class="section-desc">Persistent left sidebar showing repo, template, and session progress. The question occupies the main canvas. Familiar to Figma and Linear users. Gives non-technical users constant orientation about where they are in the flow.</div>
+  <div class="dir-tag" style="background:#EEF0FE;color:#5B6CF0;">Dual persona · Light · Sidebar · Structured</div>
+  <div class="dir-card">
+    <div class="d2">
+      <div class="d2-sidebar">
+        <div class="d2-sidebar-logo">IssueForge</div>
+        <div class="d2-sidebar-label">Repository</div>
+        <div class="d2-sidebar-repo">acme-corp / billing-service</div>
+        <div class="d2-sidebar-label">Progress</div>
+        <div class="d2-step-item done"><div class="d2-step-dot"></div> Described issue</div>
+        <div class="d2-step-item done"><div class="d2-step-dot"></div> Question 1</div>
+        <div class="d2-step-item active"><div class="d2-step-dot"></div> Question 2</div>
+        <div class="d2-step-item"><div class="d2-step-dot"></div> Question 3</div>
+        <div class="d2-step-item"><div class="d2-step-dot"></div> Review &amp; submit</div>
+      </div>
+      <div class="d2-main">
+        <div class="d2-q-label">Question 2 of 3</div>
+        <div class="d2-q-text">Does this issue happen for all users, or only for specific account types or plans?</div>
+        <div class="d2-q-why">↳ Why is IssueForge asking this?</div>
+        <input class="d2-input" type="text" placeholder="Type your answer…" />
+        <div class="d2-actions">
+          <button class="d2-btn-primary">Next →</button>
+          <button class="d2-btn-secondary">Skip</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D3: Two-Zone Dark -->
+<div id="d3" class="section">
+  <div class="section-label">Direction 3</div>
+  <div class="section-title">Two-Zone — Dark</div>
+  <div class="section-desc">Same two-zone structure as D2 but in dark mode with monospace repo label and tighter density. Designed for the developer persona. Feels native next to Cursor and Linear. AI colour (#A78BFA) used for the "why" disclosure.</div>
+  <div class="dir-tag" style="background:#1E2140;color:#7B8FF5;">Developer first · Dark · Sidebar · Compact</div>
+  <div class="dir-card">
+    <div class="d3">
+      <div class="d3-sidebar">
+        <div class="d3-logo">IssueForge</div>
+        <div class="d3-repo">acme-corp/billing-service</div>
+        <div class="d3-step done"><div class="d2-step-dot"></div> described</div>
+        <div class="d3-step done"><div class="d2-step-dot"></div> q1</div>
+        <div class="d3-step active"><div class="d2-step-dot"></div> q2</div>
+        <div class="d3-step"><div class="d2-step-dot"></div> q3</div>
+        <div class="d3-step"><div class="d2-step-dot"></div> review</div>
+      </div>
+      <div class="d3-main">
+        <div class="d3-q-num">// question 2 of 3</div>
+        <div class="d3-q-text">Does this issue happen for all users, or only for specific account types or plans?</div>
+        <div class="d3-q-why">↳ context: SubscriptionService.ts:284</div>
+        <input class="d3-input" type="text" placeholder="answer…" />
+        <div class="d3-hint">⌘↵ to continue</div>
+        <button class="d3-btn">Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D4: Card Wizard -->
+<div id="d4" class="section">
+  <div class="section-label">Direction 4</div>
+  <div class="section-title">Card Wizard — Light</div>
+  <div class="section-desc">Horizontal stepper at the top; centred card with elevated shadow. Each question shows an inline context hint ("I noticed your repo has SubscriptionService…") inside the card. Familiar wizard pattern — non-technical users will recognise it from onboarding flows they've seen before.</div>
+  <div class="dir-tag" style="background:#EEF0FE;color:#5B6CF0;">Non-technical first · Light · Stepper · Card-elevated</div>
+  <div class="dir-card">
+    <div class="d4">
+      <div class="d4-header">
+        <span class="d4-logo">IssueForge</span>
+        <div class="d4-stepper">
+          <div class="d4-step-item done"><div class="d4-step-num">✓</div> Describe</div>
+          <div class="d4-step-sep"></div>
+          <div class="d4-step-item done"><div class="d4-step-num">✓</div> Q1</div>
+          <div class="d4-step-sep"></div>
+          <div class="d4-step-item active"><div class="d4-step-num">2</div> Q2</div>
+          <div class="d4-step-sep"></div>
+          <div class="d4-step-item"><div class="d4-step-num">3</div> Q3</div>
+          <div class="d4-step-sep"></div>
+          <div class="d4-step-item"><div class="d4-step-num">4</div> Review</div>
+        </div>
+      </div>
+      <div class="d4-card">
+        <div class="d4-card-label">Question 2 of 3</div>
+        <div class="d4-card-q">Does this issue happen for all users, or only for specific account types or plans?</div>
+        <div class="d4-card-context">I noticed your repo has a <strong>SubscriptionService</strong> — this will help me target the right part of the codebase.</div>
+        <input class="d4-input" type="text" placeholder="Type your answer in plain words…" />
+        <div class="d4-actions">
+          <span class="d4-skip">Skip this question</span>
+          <button class="d4-btn">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D5: Zen Light -->
+<div id="d5" class="section">
+  <div class="section-label">Direction 5</div>
+  <div class="section-title">Zen — Light</div>
+  <div class="section-desc">Maximum whitespace. No sidebar, no stepper, just the question and an underline input. Progress is shown as three thin bars. Inspired by Typeform's focus-per-question approach. Feels calm and considered — could work well for non-technical users who find busy UIs anxiety-inducing.</div>
+  <div class="dir-tag" style="background:#EEF0FE;color:#5B6CF0;">Non-technical first · Light · Minimal · Typeform-style</div>
+  <div class="dir-card">
+    <div class="d5">
+      <div class="d5-logo">ISSUEFORGE</div>
+      <div class="d5-progress">
+        <div class="d5-bar done"></div>
+        <div class="d5-bar active"></div>
+        <div class="d5-bar"></div>
+      </div>
+      <div class="d5-q">Does this affect <strong>all users</strong>, or only specific account types?</div>
+      <input class="d5-input" type="text" placeholder="Your answer…" />
+      <div class="d5-hint">Press Enter ↵ to continue</div>
+      <button class="d5-btn">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- D6: Zen Dark -->
+<div id="d6" class="section">
+  <div class="section-label">Direction 6</div>
+  <div class="section-title">Zen — Dark</div>
+  <div class="section-desc">Same zen approach as D5 but dark. The AI colour (#A78BFA) highlights the key term in the question. Monospace hint text ("⌘↵") signals keyboard-first for developer users. Minimal, fast, uncluttered.</div>
+  <div class="dir-tag" style="background:#1E2140;color:#7B8FF5;">Developer · Dark · Minimal · Keyboard-first</div>
+  <div class="dir-card">
+    <div class="d6">
+      <div class="d6-logo">ISSUEFORGE</div>
+      <div class="d6-progress">
+        <div class="d6-bar done"></div>
+        <div class="d6-bar active"></div>
+        <div class="d6-bar"></div>
+      </div>
+      <div class="d6-q">Does this affect <strong>all users</strong>, or only specific account types?</div>
+      <input class="d6-input" type="text" placeholder="answer…" />
+      <div class="d6-hint">⌘↵ to continue · esc to skip</div>
+      <button class="d6-btn">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- D7: Review Light -->
+<div id="d7" class="section">
+  <div class="section-label">Direction 7</div>
+  <div class="section-title">Issue Review — Light</div>
+  <div class="section-desc">The post-generation review screen. Two-panel: rendered preview on the left, metadata sidebar on the right. "AI-assisted" badge on the preview label. Primary CTA is Submit — confident and prominent. The edit button is secondary. "Start over" is far-left so it's not accidentally pressed.</div>
+  <div class="dir-tag" style="background:#EEF0FE;color:#5B6CF0;">Review screen · Light · Two-panel · Submit-primary</div>
+  <div class="dir-card">
+    <div class="d7">
+      <div class="d7-header">
+        <span class="d7-logo">IssueForge</span>
+        <span class="d7-status">Ready to submit</span>
+      </div>
+      <div class="d7-body">
+        <div class="d7-preview">
+          <div class="d7-preview-label">
+            Issue preview
+            <span class="d7-ai-badge">AI-assisted</span>
+          </div>
+          <div class="d7-issue-title">Fix: Subscription downgrade fails silently for enterprise accounts</div>
+          <div class="d7-issue-section">
+            <div class="d7-issue-h">## Description</div>
+            <div class="d7-issue-p">When an enterprise account attempts to downgrade their subscription plan, the operation appears to succeed in the UI but the plan is not updated in the database. No error is shown to the user.</div>
+          </div>
+          <div class="d7-issue-section">
+            <div class="d7-issue-h">## Steps to Reproduce</div>
+            <div class="d7-issue-p">1. Log in as an enterprise account owner<br>2. Navigate to Settings → Billing → Change Plan<br>3. Select a lower tier and confirm<br>4. Observe: success toast appears but plan remains unchanged</div>
+          </div>
+          <div class="d7-issue-section">
+            <div class="d7-issue-h">## Expected Behaviour</div>
+            <div class="d7-issue-p">The subscription plan should be updated in the database and reflected in the UI within the same session.</div>
+          </div>
+          <div class="d7-issue-code">// Suspected area: SubscriptionService.ts:284
+await this.planRepository.update(accountId, newPlan);</div>
+        </div>
+        <div class="d7-sidebar">
+          <div class="d7-sidebar-label">Issue details</div>
+          <div class="d7-meta-item">Repo<span class="d7-meta-val">billing-service</span></div>
+          <div class="d7-meta-item">Label<span class="d7-meta-val">bug</span></div>
+          <div class="d7-meta-item">Template<span class="d7-meta-val">Bug report</span></div>
+          <div class="d7-meta-item">Sources<span class="d7-meta-val" style="color:#A78BFA;cursor:pointer;">3 files referenced</span></div>
+        </div>
+      </div>
+      <div class="d7-footer">
+        <span class="d7-restart">← Start over</span>
+        <div class="d7-actions">
+          <button class="d7-edit-btn">Edit</button>
+          <button class="d7-submit-btn">Submit to GitHub →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D8: Review Dark -->
+<div id="d8" class="section">
+  <div class="section-label">Direction 8</div>
+  <div class="section-title">Issue Review — Dark</div>
+  <div class="section-desc">Same review screen in dark mode. Monospace "sources" link uses AI colour. Code block uses the AI colour to highlight the suspected code area. Footer uses monospace for "start over" — developer signal. Compact and precise.</div>
+  <div class="dir-tag" style="background:#1E2140;color:#7B8FF5;">Review screen · Dark · Compact · Developer</div>
+  <div class="dir-card">
+    <div class="d8">
+      <div class="d8-header">
+        <span class="d8-logo">IssueForge</span>
+        <span class="d8-status">ready to submit</span>
+      </div>
+      <div class="d8-body">
+        <div class="d8-preview">
+          <div class="d8-preview-label">
+            issue preview
+            <span class="d8-ai-badge">AI-assisted</span>
+          </div>
+          <div class="d8-issue-title">Fix: Subscription downgrade fails silently for enterprise accounts</div>
+          <div class="d8-issue-h">## Description</div>
+          <div class="d8-issue-p">When an enterprise account attempts to downgrade their subscription plan, the operation appears to succeed in the UI but the plan is not updated in the database. No error is shown to the user.</div>
+          <div class="d8-issue-h">## Steps to Reproduce</div>
+          <div class="d8-issue-p">1. Log in as enterprise account owner<br>2. Navigate to Settings → Billing → Change Plan<br>3. Select a lower tier and confirm</div>
+          <div class="d8-issue-code">// SubscriptionService.ts:284
+await this.planRepository.update(accountId, newPlan);</div>
+          <div class="d8-sources">↳ 3 files referenced · click to expand</div>
+        </div>
+        <div class="d8-sidebar">
+          <div class="d8-sidebar-label">// meta</div>
+          <div class="d8-meta-item">repo: <span class="d8-meta-val">billing-service</span></div>
+          <div class="d8-meta-item">label: <span class="d8-meta-val">bug</span></div>
+          <div class="d8-meta-item">tpl: <span class="d8-meta-val">bug-report</span></div>
+          <div class="d8-meta-item">src: <span class="d8-meta-val" style="color:#A78BFA;">3 files</span></div>
+        </div>
+      </div>
+      <div class="d8-footer">
+        <span class="d8-restart">// start-over</span>
+        <div class="d8-actions">
+          <button class="d8-edit-btn">edit</button>
+          <button class="d8-submit-btn">Submit to GitHub →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
