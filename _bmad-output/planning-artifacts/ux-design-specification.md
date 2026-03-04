@@ -3,7 +3,7 @@ stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-core-experience',
 inputDocuments: ['_bmad-output/planning-artifacts/prd.md']
 ---
 
-# UX Design Specification — IssueForge
+# UX Design Specification — Spekd
 
 **Author:** ChiaLung Liu
 **Date:** 2026-03-03
@@ -16,24 +16,38 @@ inputDocuments: ['_bmad-output/planning-artifacts/prd.md']
 
 ### Project Vision
 
-IssueForge is an AI issue interrogator — a SaaS web app that front-loads the developer clarification conversation into the moment of issue creation. Instead of generating content from what a user has already written, the AI asks targeted, repo-aware questions *before* generating anything. The result lands in GitHub as a structured, context-complete issue that requires zero follow-up from the receiving developer.
+Spekd is a full product lifecycle platform — **"Your idea, fully spekd."** — that takes users from a rough idea to fully implemented code across three product phases: **PLAN** (guided product planning), **CREATE** (AI-powered issue creation), and **BUILD** (agentic implementation).
 
-The core UX challenge is serving two very different mental models through a single product: non-technical users who need guidance and confidence, and developers who need speed and precision. The role self-selection at onboarding is the primary lever. Every design decision downstream must honour both paths genuinely.
+The CREATE phase (Product Phase 1) is the core that ships first: an AI issue interrogator that front-loads the developer clarification conversation into the moment of issue creation. Instead of generating content from what a user has already written, the AI asks targeted, repo-aware questions *before* generating anything. The result lands in GitHub as a structured, context-complete issue that requires zero follow-up from the receiving developer.
+
+The PLAN phase (Product Phase 0) extends this upstream: non-technical founders and PMs describe their product idea, and Spekd walks them through generating a complete PRD, architecture spec, UX spec, and prioritised epics and stories using pluggable planning methods (BMAD Method is the first adapter). Planning artifacts flow directly into CREATE as enriched context.
+
+The BUILD phase (Product Phase 2) extends downstream: created issues are assigned to AI agents or developers with full planning and creation context attached.
+
+The core UX challenge is serving two very different mental models through a single product: non-technical users who need guidance and confidence, and developers who need speed and precision. The role self-selection at onboarding ("I'm a developer" / "I'm not a developer") is the primary lever. Every design decision downstream must honour both paths genuinely.
+
+> **Build Phase vs Product Phase:** Build Phase 1 (MVP) delivers Product Phase 1 (CREATE). Build Phase 2 delivers Product Phase 0 (PLAN) + Teams. Build Phase 3 delivers Product Phase 2 (BUILD) + Growth. UX patterns described in this document cover all phases, with Build Phase 2/3 content clearly marked as future.
 
 ### Target Users
 
 **Non-technical creators (Sarah the BA, Alex the freelance PM)**
 Users who know *what* they need but not how to express it in developer language. Motivated by not feeling like the bottleneck. Low tolerance for complexity, potential mobile usage, may rely on assistive technology. The product must make them feel capable and heard — not overwhelmed by GitHub conventions or AI jargon.
 
+**Non-technical founders and planners (Nadia the co-founder)** *(future — Build Phase 2)*
+Users with a product vision but no technical background. They need to go from "I know what I want" to "here's exactly what to build." They enter through Phase 0 (PLAN) and need a guided, non-intimidating workflow that produces professional-quality planning artifacts. Their CTO or dev team is the downstream consumer.
+
 **Developer creators (Marcus)**
 Users who already know the answer and want to get it structured fast. The clarification loop must feel precise and quick, not hand-holdy. Speed is respect for their time. A 45-second issue creation is a win; a 3-minute one is an insult.
 
 **Developer receivers (Jordan)**
-Never use IssueForge directly but experience its output in GitHub. Their ability to act on an issue without follow-up is the downstream UX success metric. IssueForge cannot control GitHub's UI — but it controls the structure, formatting, and completeness of what it submits.
+Never use Spekd directly but experience its output in GitHub. Their ability to act on an issue without follow-up is the downstream UX success metric. Spekd cannot control GitHub's UI — but it controls the structure, formatting, and completeness of what it submits.
+
+**Team leads and admins (Raj the team lead, Priya the admin)** *(future — Build Phase 2)*
+Users who set up shared workspaces, manage team permissions, configure defaults, and ensure consistency across their team's planning and issue creation. They need clear admin controls and visibility into team activity without micromanaging.
 
 ### Key Design Challenges
 
-1. **The dual-persona problem** — the same core flow must feel approachable to Sarah and fast to Marcus. These are conflicting UX instincts. Role self-selection at onboarding is the key lever, but both paths must be designed with genuine care, not just different copy.
+1. **The dual-persona problem** — the same core flow must feel approachable to Sarah and fast to Marcus. These are conflicting UX instincts. Role self-selection at onboarding ("I'm a developer" / "I'm not a developer") is the key lever, but both paths must be designed with genuine care, not just different copy.
 
 2. **Making the clarification loop feel like help, not interrogation** — each question must feel obviously relevant, answerable without developer knowledge (for non-technical users), and fast. The 3-question maximum is a UX constraint as much as a product constraint.
 
@@ -43,15 +57,23 @@ Never use IssueForge directly but experience its output in GitHub. Their ability
 
 5. **The first-scan wait as a trust-building moment** — on first repo add, a full code scan runs. The waiting experience must communicate value ("I'm learning your codebase so I can ask smarter questions"), not just show a spinner.
 
+6. **Phase 0 planning workflow for non-technical users** *(future — Build Phase 2)* — guiding a founder through generating a PRD, architecture spec, UX spec, and epics without overwhelming them with technical concepts. The multi-step planning workflow must feel progressive and achievable, not like a requirements-gathering ordeal.
+
+7. **Team workspace onboarding and permissions** *(future — Build Phase 2)* — making team setup fast (under 15 minutes to first shared issue) while maintaining clear role-based permissions (Owner/Admin/Member) that feel obvious, not bureaucratic.
+
 ### Design Opportunities
 
-1. **The clarification loop as the brand moment** — this is IssueForge's signature interaction. Questions that feel eerily relevant, answers that are quick to give: if this loop feels magical, it becomes the thing users talk about. It is worth significant design investment.
+1. **The clarification loop as the brand moment** — this is Spekd's signature interaction. Questions that feel eerily relevant, answers that are quick to give: if this loop feels magical, it becomes the thing users talk about. It is worth significant design investment.
 
 2. **Trust through transparency** — showing users *why* the AI asked a particular question ("I noticed your repo has a billing module…") transforms the experience from "AI guessing" to "AI understanding." Explainability as delight.
 
-3. **Jordan's passive experience** — IssueForge controls the structure and formatting of what it submits to GitHub. A well-crafted issue that renders beautifully in GitHub's markdown is itself a UX deliverable — one that lands in front of every developer who receives an IssueForge issue.
+3. **Jordan's passive experience** — Spekd controls the structure and formatting of what it submits to GitHub. A well-crafted issue that renders beautifully in GitHub's markdown is itself a UX deliverable — one that lands in front of every developer who receives a Spekd issue.
 
 4. **Onboarding as product demo** — Alex's first session *is* the marketing moment. The onboarding flow should feel like a live demo that proves value, not a setup wizard that delays it. Zero friction to first issue is the UX north star.
+
+5. **Planning as guided discovery** *(future — Build Phase 2)* — Nadia's planning workflow should feel like a structured conversation, not a requirements document. Each planning step (PRD → Architecture → UX → Epics) builds visibly on the previous one, giving the user a sense of momentum and tangible progress.
+
+6. **Team workspace as shared context** *(future — Build Phase 2)* — Raj's team workspace should make collaboration feel lightweight — shared artifacts, shared repos, and shared defaults without the overhead of traditional project management tools.
 
 ## Core User Experience
 
@@ -86,7 +108,9 @@ These must require zero conscious effort:
 | Generated issue appears on screen | The "wow" moment. Generic output = product has failed. Accurate, well-structured output = user is sold. |
 | BYOK setup for non-technical user | Highest drop-off risk in onboarding. Too technical = churn before ever experiencing the product's value. |
 | First repo scan completes | The transition from "scanning…" to "ready" must feel like something valuable happened, not just a spinner that disappeared. |
-| Issue lands in GitHub | Jordan's Monday morning experience. Formatting, structure, and completeness is IssueForge's quality on display. |
+| Issue lands in GitHub | Jordan's Monday morning experience. Formatting, structure, and completeness is Spekd's quality on display. |
+| First planning artifact generated *(future)* | Nadia sees her rough idea transformed into a structured PRD. If it feels generic, trust is lost. If it reflects her specific domain, she's sold. |
+| Team workspace first shared issue *(future)* | Raj's team feels the value of shared context. If setup was painful or the first shared issue feels no different from a solo one, the team value prop fails. |
 
 ### Experience Principles
 
@@ -104,7 +128,7 @@ These must require zero conscious effort:
 
 ### Primary Emotional Goals
 
-IssueForge serves two distinct user types with different primary emotional goals — design must honour both without compromising either.
+Spekd serves two distinct user types with different primary emotional goals — design must honour both without compromising either.
 
 **Non-technical creators (Sarah, Alex):** Primary emotion is **capability** — *"I can do this. I know what I need and now I can actually say it properly."* Secondary emotion is **relief** — the weight of "I'm going to get this wrong again" is lifted. Users should feel like full participants in the development process, not translators who keep getting things returned.
 
@@ -124,6 +148,26 @@ IssueForge serves two distinct user types with different primary emotional goals
 | Generated issue appears | **The wow moment**: "this sounds like what I meant but better" | Satisfaction — "yep, correct and properly formatted" |
 | Submit to GitHub | Pride — "I did that. And it's good." | Done. Next. |
 | Returning to use again | Comfort and routine — part of how they work now | Habit — it's in the workflow |
+
+**Planning Journey Emotions** *(future — Build Phase 2)*
+
+| Stage | Non-Technical Founder (Nadia) |
+|---|---|
+| Selects planning method | Curious but cautious — "will this actually understand my idea?" |
+| Describes product idea | Hopeful — "this is my chance to finally articulate this properly" |
+| Planning questions appear | Surprised and relieved — "these are the right questions to ask" |
+| First artifact (PRD) generated | **The wow moment**: "my CTO could actually use this" |
+| Completes full planning workflow | Accomplishment — "I went from idea to spec. I'm a real product person." |
+| Flows into Phase 1 (CREATE) | Confidence — "the issues I create will be informed by my plan" |
+
+**Team Journey Emotions** *(future — Build Phase 2)*
+
+| Stage | Team Lead (Raj) |
+|---|---|
+| Creates team workspace | Efficient optimism — "let me get this set up for the team" |
+| Invites team members | Satisfied if fast; frustrated if any invitation bounces |
+| Configures team defaults | Control — "now everyone will be consistent" |
+| Team creates first shared issue | Validation — "this is better than our old process" |
 
 ### Micro-Emotions
 
@@ -161,19 +205,19 @@ IssueForge serves two distinct user types with different primary emotional goals
 
 **GitHub (Issue Tracking)**
 
-GitHub is the destination, not the competition — but it is the product IssueForge users know best. Its UX strengths are also its weaknesses in this context:
+GitHub is the destination, not the competition — but it is the product Spekd users know best. Its UX strengths are also its weaknesses in this context:
 
 - *What it does well:* Markdown-native issue format; label and milestone taxonomy; comment threading; keyboard shortcuts for power users; the issue form is familiar to developers.
-- *What creates friction for IssueForge's users:* The blank textarea. GitHub presents a form and leaves the quality entirely to the author. Non-technical users stare at it not knowing what to write. Developers write serviceable but incomplete issues because the form asks for nothing specific. GitHub's form trusts the user to know what a good issue looks like — most don't.
-- *Lesson for IssueForge:* The rendered output in GitHub must feel native — correct labels, proper markdown formatting, standard section headings. IssueForge wins trust by making its submissions look like they were written by a senior developer who knows GitHub conventions deeply. Users must not be able to tell IssueForge wrote it; they must think *they* wrote it well.
+- *What creates friction for Spekd's users:* The blank textarea. GitHub presents a form and leaves the quality entirely to the author. Non-technical users stare at it not knowing what to write. Developers write serviceable but incomplete issues because the form asks for nothing specific. GitHub's form trusts the user to know what a good issue looks like — most don't.
+- *Lesson for Spekd:* The rendered output in GitHub must feel native — correct labels, proper markdown formatting, standard section headings. Spekd wins trust by making its submissions look like they were written by a senior developer who knows GitHub conventions deeply. Users must not be able to tell Spekd wrote it; they must think *they* wrote it well.
 
 **ChatGPT (AI Chat for Writing Assistance)**
 
-The product millions of IssueForge's users reach for when they need help expressing something clearly.
+The product millions of Spekd's users reach for when they need help expressing something clearly.
 
 - *What it does well:* Conversational input with zero friction — users type naturally and get structured output. The chat metaphor lowers the stakes of every input. Progressive disclosure through dialogue. Streaming output creates a sense of responsiveness and trust. The "thinking…" indicator sets expectations.
 - *What creates friction:* Users have to know how to prompt it. Non-technical users often get generic output because their input was generic. There's no context about their specific codebase. The conversation has no memory of the project.
-- *Lesson for IssueForge:* Adopt the low-stakes, conversational input tone — users should feel like they're chatting, not filling a form. But the AI's questions carry the context ChatGPT lacks. IssueForge asks ChatGPT-style questions that are infused with repo awareness. The streaming output pattern creates the same responsive feel that ChatGPT users already trust.
+- *Lesson for Spekd:* Adopt the low-stakes, conversational input tone — users should feel like they're chatting, not filling a form. But the AI's questions carry the context ChatGPT lacks. Spekd asks ChatGPT-style questions that are infused with repo awareness. The streaming output pattern creates the same responsive feel that ChatGPT users already trust.
 
 **Figma (Collaborative Design Tool)**
 
@@ -181,15 +225,15 @@ Used heavily by Sarah's UX/design counterparts and increasingly by non-technical
 
 - *What it does well:* Progressive disclosure through layered complexity — simple on the surface, powerful underneath. "Inspect" mode vs. "design" mode serves different mental models. Real-time progress and status indicators that feel alive, not blocking. Sidebar-based navigation that keeps context without consuming the canvas. Commenting as a lightweight collaboration layer.
 - *What creates friction:* Onboarding cognitive load for non-designers. The tool's power can feel overwhelming before the user finds their groove.
-- *Lesson for IssueForge:* Progressive disclosure is the right pattern for the dual-persona problem. Sarah sees the surface; Marcus can go deeper if he wants. The layout approach — a persistent context sidebar with a primary working canvas — maps well to IssueForge's issue creation flow: repo/template context on one side, active work on the other. Real-time, animated status indicators (not static spinners) make the AI feel alive.
+- *Lesson for Spekd:* Progressive disclosure is the right pattern for the dual-persona problem. Sarah sees the surface; Marcus can go deeper if he wants. The layout approach — a persistent context sidebar with a primary working canvas — maps well to Spekd's issue creation flow: repo/template context on one side, active work on the other. Real-time, animated status indicators (not static spinners) make the AI feel alive.
 
 **Cursor (AI-Native Code Editor)**
 
-The product most likely to have already earned developer trust with IssueForge's technical user segment.
+The product most likely to have already earned developer trust with Spekd's technical user segment.
 
-- *What it does well:* AI that understands your codebase — the core promise IssueForge shares. Inline suggestions that feel contextually relevant, not generic. The "accept/reject" interaction pattern for AI-generated content: power without obligation. Fast, keyboard-first flow. The chat pane for asking questions feels productive, not interruptive. Transparency about what the AI is looking at.
+- *What it does well:* AI that understands your codebase — the core promise Spekd shares. Inline suggestions that feel contextually relevant, not generic. The "accept/reject" interaction pattern for AI-generated content: power without obligation. Fast, keyboard-first flow. The chat pane for asking questions feels productive, not interruptive. Transparency about what the AI is looking at.
 - *What creates friction:* Developer-native UX that excludes non-technical users by default. Requires existing technical literacy.
-- *Lesson for IssueForge:* The "accept / edit / reject" pattern for AI-generated content is already familiar to developer users — use it for the generated issue review. Showing *what the AI read* (the files it referenced) creates the same transparency and trust Cursor builds with its context window display. For developer users, this is a feature; for non-technical users, it's optional depth they can ignore.
+- *Lesson for Spekd:* The "accept / edit / reject" pattern for AI-generated content is already familiar to developer users — use it for the generated issue review. Showing *what the AI read* (the files it referenced) creates the same transparency and trust Cursor builds with its context window display. For developer users, this is a feature; for non-technical users, it's optional depth they can ignore.
 
 ### Transferable UX Patterns
 
@@ -230,10 +274,10 @@ The product most likely to have already earned developer trust with IssueForge's
 ### Anti-Patterns to Avoid
 
 **The Blank Textarea (GitHub's failure mode)**
-Never present a user with an unguided empty input expecting them to know what a good issue looks like. This is the exact problem IssueForge exists to solve — do not recreate it anywhere in the flow.
+Never present a user with an unguided empty input expecting them to know what a good issue looks like. This is the exact problem Spekd exists to solve — do not recreate it anywhere in the flow.
 
 **Prompt Engineering as a User Skill (ChatGPT's failure mode)**
-Do not require users to know how to write good prompts. The AI must work with natural, imperfect, conversational input. The clarification questions compensate for vague input — the user should never have to "learn" how to use IssueForge.
+Do not require users to know how to write good prompts. The AI must work with natural, imperfect, conversational input. The clarification questions compensate for vague input — the user should never have to "learn" how to use Spekd.
 
 **Cognitive Overload Onboarding (Figma's failure mode for non-designers)**
 The BYOK setup flow must not confront non-technical users with multiple decisions at once. One action per screen. Contextual explanation at the right moment. The payoff (first issue) must feel near.
@@ -255,14 +299,14 @@ The review step before submission must not look like a warning or a request to f
 - Figma's persistent context sidebar layout — gives users orientation without consuming primary workspace
 
 **What to Adapt:**
-- Figma's progressive disclosure model — simplify for IssueForge's narrower scope; two depth levels (non-technical / developer) rather than Figma's full design/inspect/prototype spectrum
+- Figma's progressive disclosure model — simplify for Spekd's narrower scope; two depth levels (non-technical / developer) rather than Figma's full design/inspect/prototype spectrum
 - Cursor's "what the AI is reading" transparency — adapt for non-technical users so it communicates value ("using your codebase") without requiring technical interpretation
 - GitHub's issue format conventions — adopt the markdown structure fully, but remove it from the user-facing flow entirely; it should appear only in the final output
 
 **What to Avoid:**
 - GitHub's blank-form approach to issue quality — the entire product is a counter to this
-- ChatGPT's reliance on user prompting skill — IssueForge's questions replace that skill requirement
-- Cursor's developer-native defaults — IssueForge must be genuinely accessible to non-technical users as a first-class experience
+- ChatGPT's reliance on user prompting skill — Spekd's questions replace that skill requirement
+- Cursor's developer-native defaults — Spekd must be genuinely accessible to non-technical users as a first-class experience
 
 ## Design System Foundation
 
@@ -270,14 +314,14 @@ The review step before submission must not look like a warning or a request to f
 
 **Tailwind CSS v4 + shadcn/ui — Themeable Component System**
 
-IssueForge uses shadcn/ui as its component foundation, built on top of Tailwind CSS v4 and Radix UI primitives. This is not a fully custom system nor a rigid established system — it is a *copy-into-your-codebase* model where components are owned, not imported as black-box packages. Every component is visible, editable, and fully under the product's control.
+Spekd uses shadcn/ui as its component foundation, built on top of Tailwind CSS v4 and Radix UI primitives. This is not a fully custom system nor a rigid established system — it is a *copy-into-your-codebase* model where components are owned, not imported as black-box packages. Every component is visible, editable, and fully under the product's control.
 
 ### Rationale for Selection
 
 - **Dual-persona UX demands flexible, customisable components.** The same input, button, or card component may need to render differently for non-technical vs. developer contexts. shadcn/ui's copy-based model makes per-component customisation the default, not an exception.
-- **Accessibility is built in via Radix UI primitives.** Keyboard navigation, ARIA roles, focus management, and screen reader support are foundational — not retrofitted. This is essential for IssueForge's non-technical user base, which may include users relying on assistive technology.
+- **Accessibility is built in via Radix UI primitives.** Keyboard navigation, ARIA roles, focus management, and screen reader support are foundational — not retrofitted. This is essential for Spekd's non-technical user base, which may include users relying on assistive technology.
 - **Tailwind v4 utility classes align with the streaming, live-update UX.** Dynamic class composition in React (streaming AI output, animated progress states, conditional persona-based rendering) maps naturally to utility-first CSS.
-- **No design system lock-in.** shadcn/ui is not a dependency — it's source code. IssueForge can diverge freely as the product matures, without fighting a library's opinionated defaults.
+- **No design system lock-in.** shadcn/ui is not a dependency — it's source code. Spekd can diverge freely as the product matures, without fighting a library's opinionated defaults.
 - **Developer familiarity.** The target developer user segment (Marcus) already knows this stack. The interface they use will feel native to the tools they work in daily.
 - **Speed to MVP.** A full custom design system is not justified at this stage. shadcn/ui provides a production-quality component library that can be themed and customised progressively.
 
@@ -292,22 +336,24 @@ IssueForge uses shadcn/ui as its component foundation, built on top of Tailwind 
 
 - **Brand colour token:** A single primary accent colour defined at the token level drives all interactive states (hover, focus, active). Changing the brand colour requires changing one token.
 - **Typography scale:** Two font sizes serve both personas — a comfortable reading size for non-technical users and a tighter density for developer users. Controlled via the same token system.
-- **Component extensions:** The core shadcn/ui `Textarea`, `Button`, `Card`, and `Dialog` components will be extended (not replaced) with IssueForge-specific variants: `IssueTextarea`, `ClarificationCard`, `GeneratedIssuePanel`, `SubmitConfirmationDialog`.
+- **Component extensions:** The core shadcn/ui `Textarea`, `Button`, `Card`, and `Dialog` components will be extended (not replaced) with Spekd-specific variants: `IssueTextarea`, `ClarificationCard`, `GeneratedIssuePanel`, `SubmitConfirmationDialog`.
 - **Animation library:** `tailwindcss-animate` (already included with shadcn/ui) handles all micro-animations. No additional animation dependencies for MVP.
 
 ## Core User Experience (Detailed)
 
 ### Defining Experience
 
-IssueForge's defining experience is: **"Describe what you need in plain words — the AI asks three smart questions — a complete, professional GitHub issue appears."**
+Spekd's defining experience is: **"Describe what you need in plain words — the AI asks three smart questions — a complete, professional GitHub issue appears."**
 
-If this has a Tinder-style one-liner: *"Turn a rough idea into a developer-ready GitHub issue in under two minutes."*
+If this has a Tinder-style one-liner: *"Your idea, fully spekd."*
 
 The singular interaction users describe to colleagues is the AI clarification loop — not the issue creation, not the GitHub submission, but the moment a question appears on screen that references something specific to their codebase. That specificity is the brand moment. Everything before it is setup; everything after it is payoff.
 
+In the full product vision, this extends upstream: Phase 0 (PLAN) provides a guided planning workflow where the AI asks structured questions to produce planning artifacts (PRD, architecture, UX spec, epics). And downstream: Phase 2 (BUILD) connects those artifacts to implementation. But the defining experience remains the clarification loop — whether in issue creation or planning.
+
 ### User Mental Model
 
-**Non-technical users (Sarah, Alex)** come to IssueForge with a mental model borrowed from two places:
+**Non-technical users (Sarah, Alex)** come to Spekd with a mental model borrowed from two places:
 - Writing an email to explain a problem ("I just need to describe it")
 - Filling out a form they're not sure they're completing correctly ("I hope I'm doing this right")
 
@@ -338,7 +384,7 @@ The core interaction succeeds when:
 
 The core flow is a **novel combination of established patterns**:
 
-| Pattern | Origin | IssueForge Application |
+| Pattern | Origin | Spekd Application |
 |---|---|---|
 | Conversational input | Chat apps (ChatGPT, iMessage) | Initial issue description textarea |
 | Structured AI Q&A | AI assistants | Clarification question loop (novel: repo-aware) |
@@ -356,7 +402,7 @@ The user arrives at the issue creation screen from the dashboard. The trigger is
 
 **2. Interaction — Description Entry**
 
-The user types their description in natural language. No formatting required, no structure required, no minimum length enforced. The submit action is a single button ("Ask IssueForge") or `Cmd+Enter`. The repo context is already loaded — no action needed from the user.
+The user types their description in natural language. No formatting required, no structure required, no minimum length enforced. The submit action is a single button ("Ask Spekd") or `Cmd+Enter`. The repo context is already loaded — no action needed from the user.
 
 **3. Interaction — Clarification Loop**
 
@@ -384,7 +430,7 @@ On submission: a success state with a direct link to the created GitHub issue. A
 
 **Direction: Dark-anchored professional with a precise accent**
 
-IssueForge sits at the intersection of developer tooling and AI-assisted productivity. The colour system must feel at home next to GitHub, Cursor, and Linear — dark, precise, and purposeful — while remaining accessible and non-intimidating for non-technical users who default to light mode.
+Spekd sits at the intersection of developer tooling and AI-assisted productivity. The colour system must feel at home next to GitHub, Cursor, and Linear — dark, precise, and purposeful — while remaining accessible and non-intimidating for non-technical users who default to light mode.
 
 **Theme Strategy: Dual-mode by persona default**
 - Non-technical users (Sarah, Alex): light mode default
@@ -429,7 +475,7 @@ All text/background combinations meet WCAG 2.1 AA (4.5:1 minimum for body text, 
 
 **Direction: Single typeface, variable weight, high legibility**
 
-No decorative type. IssueForge is a productivity tool — typography must support reading speed and scanning, not brand expression. One typeface family handles all contexts.
+No decorative type. Spekd is a productivity tool — typography must support reading speed and scanning, not brand expression. One typeface family handles all contexts.
 
 **Primary Typeface: Geist (by Vercel)**
 - Already a common choice in the Next.js ecosystem; ships well with Vercel deployments
@@ -525,10 +571,10 @@ Full interactive HTML showcase: `_bmad-output/planning-artifacts/ux-design-direc
 
 **D3 (Two-Zone Dark) for the clarification loop + D8 (Review Dark) for the issue review screen — with D4's inline AI context hint adopted into the question card.**
 
-Dark mode is the default for all users. Light mode is available as a user toggle in settings. This is a deliberate signal: IssueForge is a precision tool that respects the environments its users work in.
+Dark mode is the default for all users. Light mode is available as a user toggle in settings. This is a deliberate signal: Spekd is a precision tool that respects the environments its users work in.
 
 **Combined direction in detail:**
-- **Layout:** Two-zone — persistent left sidebar (repo, template, progress) + main canvas (active step)
+- **Layout:** Two-zone — persistent left sidebar (repo, template, progress) + main canvas (active step). This same layout structure is reused for the Phase 0 planning workspace (sidebar shows planning steps instead of creation steps).
 - **Clarification question:** Question text at `--text-lg` (17px, weight 500); inline AI context hint below the question in a subtle bordered callout (borrowed from D4); monospace `⌘↵ to continue` keyboard hint
 - **Progress:** Step list in sidebar (described → q1 → q2 → q3 → review); active step highlighted in `--color-primary-subtle`
 - **Input:** Dark input field, 1px border at `--color-border`, full-width, focus ring in `--color-primary`
@@ -561,7 +607,7 @@ Dark mode is the default for all users. Light mode is available as a user toggle
 
 ```mermaid
 flowchart TD
-    A([Open IssueForge]) --> B[Dashboard: select repo]
+    A([Open Spekd]) --> B[Dashboard: select repo]
     B --> C{Repo scanned?}
     C -->|First time| D[Repo scan in progress\n'Learning your codebase…'\n+ file list animation]
     D --> E[Scan complete\n'Ready — your codebase is loaded']
@@ -569,7 +615,7 @@ flowchart TD
     E --> F
     F --> G[New Issue screen\nLarge chat-style textarea\n'What needs to be fixed or built?']
     G --> H[Sarah types in plain language\n'We need to show users their\nremaining credit balance on the dashboard']
-    H --> I[Submit: 'Ask IssueForge' / Cmd+Enter]
+    H --> I[Submit: 'Ask Spekd' / Cmd+Enter]
     I --> J[AI generates Q1\nWith inline context hint:\n'I noticed your repo has a BillingModule…']
     J --> K[Sarah reads Q1 and answers\nShort text reply]
     K --> L{More questions?}
@@ -602,7 +648,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([Open IssueForge]) --> B{Repo already selected?}
+    A([Open Spekd]) --> B{Repo already selected?}
     B -->|Yes| C[New Issue textarea\nLast-used repo pre-selected]
     B -->|No| D[Dashboard: quick-select repo]
     D --> C
@@ -643,7 +689,7 @@ flowchart TD
     B -->|No| Z([Bounced])
     B -->|Yes| C[Click 'Sign in with GitHub']
     C --> D[GitHub OAuth\nPermissions screen]
-    D --> E[Return to IssueForge\nRepos auto-loaded from GitHub]
+    D --> E[Return to Spekd\nRepos auto-loaded from GitHub]
     E --> F{Has API key?}
     F -->|Yes| I[Select repo to start]
     F -->|No - needs BYOK setup| G[BYOK onboarding flow\nOne step at a time]
@@ -673,7 +719,7 @@ flowchart TD
 
 ### Journey 4: Priya — Team Setup and Template Configuration (Admin)
 
-**Goal:** Configure IssueForge for her team before their kick-off: set default templates per repo, assign AI provider.
+**Goal:** Configure Spekd for her team before their kick-off: set default templates per repo, assign AI provider.
 
 **Entry point:** Dashboard → Settings → Team
 
@@ -691,7 +737,7 @@ flowchart TD
     H -->|Yes| I[Save template assignment]
     I --> J[Set default AI provider\nAnthropic or OpenAI toggle]
     J --> K[Save settings]
-    K --> L[Priya shares with team via Slack\n'IssueForge is ready']
+    K --> L[Priya shares with team via Slack\n'Spekd is ready']
     L --> M([Team begins creating issues\nConsistent structure from day one])
 ```
 
@@ -699,11 +745,11 @@ flowchart TD
 
 ### Journey 5: Jordan — Receiving a Well-Structured Issue (Developer Receiver)
 
-**Note:** Jordan never uses IssueForge directly. This flow documents the output quality requirements from Jordan's perspective — IssueForge's UX deliverable that lands in GitHub.
+**Note:** Jordan never uses Spekd directly. This flow documents the output quality requirements from Jordan's perspective — Spekd's UX deliverable that lands in GitHub.
 
 ```mermaid
 flowchart TD
-    A([Jordan opens GitHub\nMonday morning issue triage]) --> B[Opens IssueForge-generated issue]
+    A([Jordan opens GitHub\nMonday morning issue triage]) --> B[Opens Spekd-generated issue]
     B --> C{Issue quality check}
     C --> C1[Clear title: bug type + component]
     C --> C2[Plain-language summary\nthat still makes technical sense]
@@ -715,7 +761,7 @@ flowchart TD
     E --> F([Issue resolved in same sprint\nZero clarification requests])
 ```
 
-**IssueForge output requirements for Jordan's experience:**
+**Spekd output requirements for Jordan's experience:**
 - Issue title: `[Type]: [Problem description] in [Component]`
 - Body: Summary → Acceptance Criteria → Steps to Reproduce (bugs) → Technical Notes → Labels
 - Technical notes: must reference actual file names and line numbers where relevant
@@ -724,22 +770,103 @@ flowchart TD
 
 ---
 
+### Journey 6: Nadia — Guided Product Planning (Non-Technical Founder) *(future — Build Phase 2)*
+
+**Goal:** Go from a rough product idea to a complete set of planning artifacts (PRD, architecture, UX spec, epics) using the BMAD planning method, then flow into Phase 1 to create GitHub issues from the generated stories.
+
+**Entry point:** Dashboard → "New Project" → Select Planning Method
+
+```mermaid
+flowchart TD
+    A([Nadia opens Spekd\nFirst time using PLAN phase]) --> B[Dashboard: 'New Project' CTA]
+    B --> C[Name the project\n'GreenMatch Marketplace']
+    C --> D[Select planning method\nBMAD Method — description explains\nwhat it produces and how long it takes]
+    D --> E[Planning workspace opens\nSidebar shows planning steps:\nIdea → PRD → Architecture → UX → Epics]
+    E --> F[Step 1: Describe your idea\nLarge chat-style textarea\n'What product do you want to build?']
+    F --> G[Nadia types product description\nin plain language]
+    G --> H[AI asks structured follow-up questions\n'Who are your primary users?'\n'What is the core transaction?'\nOne at a time, conversational]
+    H --> I{More planning questions?}
+    I -->|Yes| J[Next question appears\nProgress: 'Question 3 of 5']
+    J --> H
+    I -->|No| K[Transition: 'Generating your PRD…'\nStreaming output begins]
+    K --> L[PRD renders section by section\nExecutive summary, user journeys,\nfunctional requirements]
+    L --> M{Nadia reviews PRD}
+    M -->|Looks good| N[Mark PRD as finalised\nProceed to Architecture step]
+    M -->|Needs edits| O[Inline editing of PRD\nNadia adds domain knowledge]
+    O --> M
+    N --> P[Architecture step\nAI generates based on PRD context\nStreaming, review, edit cycle repeats]
+    P --> Q[UX Spec step\nSame pattern: generate → review → edit]
+    Q --> R[Epics & Stories step\nPrioritised backlog generated\nfrom all previous artifacts]
+    R --> S{Planning complete}
+    S --> T['Create Issues' CTA on first epic\nFlows to Phase 1 CREATE]
+    T --> U[Phase 1: AI clarification loop\nwith full planning context injected]
+    U --> V([Issues created in GitHub\nNadia's CTO starts building])
+```
+
+**Key UX principles for the planning workflow:**
+- **One step at a time.** The sidebar shows all steps but only the current one is active. Users cannot skip ahead — each artifact builds on the previous.
+- **Streaming generation reuses the same pattern as issue creation.** The wow moment is consistent: "Writing your PRD…" with section-by-section rendering.
+- **Every artifact is editable before moving on.** Nadia's domain knowledge supplements the AI's output. The edit step is empowerment, not error correction.
+- **Planning context flows downstream automatically.** When Nadia creates issues from stories, the AI clarification loop has access to the PRD, architecture decisions, and UX constraints. This is invisible to the user — the quality simply improves.
+- **Planning progress is persistent.** Nadia can leave mid-workflow and return later. All artifacts and answers are saved.
+
+---
+
+### Journey 7: Raj — Team Workspace Setup and Collaboration *(future — Build Phase 2)*
+
+**Goal:** Create a team workspace, invite members, configure defaults, and enable collaborative planning and issue creation.
+
+**Entry point:** Dashboard → "Create Team"
+
+```mermaid
+flowchart TD
+    A([Raj logs in\nWants to set up team workspace]) --> B[Dashboard: 'Create Team' CTA]
+    B --> C[Name the team\n'Product Engineering']
+    C --> D[Team workspace created\nRaj is Owner by default]
+    D --> E[Invite members screen\nEmail or GitHub username input\nBulk invite supported]
+    E --> F[Invitations sent\nPending status shown per member]
+    F --> G[Configure team defaults]
+    G --> G1[Default AI provider\nAnthropic or OpenAI toggle]
+    G1 --> G2[Default planning method\nBMAD Method selected]
+    G2 --> G3[Default templates per repo\nFeature request for main repos]
+    G3 --> H[Add shared repos\nSelect from Raj's accessible repos]
+    H --> I[Team dashboard populated\nMembers joining, repos shared]
+    I --> J{Members accept invitations}
+    J --> K[Raj assigns roles\nPM → Admin\nDevelopers, QA, Designer → Member]
+    K --> L[PM starts Phase 0 planning\nPlanning artifacts shared in team workspace]
+    L --> M[Team members review artifacts\nDesigner annotates UX spec\nDevs flag architecture questions]
+    M --> N[PM creates issues from stories\nAssigns across team]
+    N --> O([Full lifecycle in shared workspace\nEveryone references same artifacts])
+```
+
+**Key UX principles for team workspaces:**
+- **Fast setup.** Team creation → first shared issue should take under 15 minutes. No lengthy configuration wizards.
+- **Role permissions are obvious.** Owner can do everything. Admin can manage settings and templates. Member can access shared repos and artifacts. The permission model is visible in the team settings UI.
+- **Team workspace is additive.** Individual users continue to use Spekd exactly as before. The team workspace adds shared context — it does not replace the individual experience.
+- **Shared artifacts, not shared editing.** Team members can view and annotate shared planning artifacts, but real-time collaborative editing is not in scope. One person edits at a time; changes are visible to all.
+- **Team data isolation is invisible but absolute.** No user ever sees another team's data. This is enforced at the database layer, not the UI layer.
+
+---
+
 ### Journey Patterns
 
 **Entry pattern — always a single clear CTA:**
-Every journey starts with one obvious action. "New Issue" for creators. "Sign in with GitHub" for Alex. "Team Settings" for Priya. No choice paralysis at entry.
+Every journey starts with one obvious action. "New Issue" for creators. "Sign in with GitHub" for Alex. "Team Settings" for Priya. "New Project" for Nadia. "Create Team" for Raj. No choice paralysis at entry.
 
 **Progressive loading — value while you wait:**
-Both the repo scan and AI generation show named progress (file names scrolling, section-by-section streaming). Waiting is transformed into "watching it work."
+Both the repo scan and AI generation show named progress (file names scrolling, section-by-section streaming). Planning artifact generation follows the same pattern. Waiting is transformed into "watching it work."
 
 **Question-answer as rhythm, not interrogation:**
-One question at a time. Answer submitted, next question appears. The rhythm is conversational — question, pause, answer, next. Not a form submitted all at once.
+One question at a time. Answer submitted, next question appears. The rhythm is conversational — question, pause, answer, next. Not a form submitted all at once. This pattern is consistent in both Phase 1 (issue clarification) and Phase 0 (planning clarification).
 
 **Sidebar as anchor:**
-For all creation flows, the sidebar persists through every step. Repo name, template, progress. It answers "where am I?" without the user needing to ask.
+For all creation and planning flows, the sidebar persists through every step. In Phase 1: repo name, template, progress. In Phase 0: project name, planning method, artifact progress. It answers "where am I?" without the user needing to ask.
 
 **Success state is a link, not a modal:**
-On submission, the success state is a direct link to the GitHub issue. The user's work now exists somewhere real. The link is the accomplishment.
+On issue submission, the success state is a direct link to the GitHub issue. On planning completion, the success state shows the completed artifacts. The user's work now exists somewhere real.
+
+**Planning workflow as progressive build:**
+*(future — Build Phase 2)* Each planning step produces a visible artifact that feeds the next step. PRD → Architecture → UX → Epics. The user sees their idea becoming more concrete at each stage.
 
 **Error recovery is always one clear next action:**
 API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" button. Generation failed → "Try again" + option to rephrase description. No dead ends.
@@ -786,7 +913,7 @@ API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" 
 
 **Purpose:** The primary issue description input. Must signal "chat, not form" while remaining accessible and supporting keyboard submit.
 
-**Anatomy:** Large textarea (min 3 rows, auto-grows to 8) + placeholder text ("What needs to be fixed or built?") + submit button ("Ask IssueForge") + `Cmd+Enter` keyboard hint label
+**Anatomy:** Large textarea (min 3 rows, auto-grows to 8) + placeholder text ("What needs to be fixed or built?") + submit button ("Ask Spekd") + `Cmd+Enter` keyboard hint label
 
 **States:** Default → Focused (primary border + focus ring) → Filled (placeholder hidden) → Submitting (button disabled, spinner)
 
@@ -822,7 +949,7 @@ API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" 
 
 **`RepoScanProgress`**
 
-**Purpose:** Communicates that IssueForge is reading the codebase — not a generic spinner, a named progress experience.
+**Purpose:** Communicates that Spekd is reading the codebase — not a generic spinner, a named progress experience.
 
 **Anatomy:**
 - Heading: "Learning your codebase…"
@@ -912,7 +1039,7 @@ API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" 
 
 ### Component Implementation Strategy
 
-- All custom components live in `/components/issueforge/` — separate from `/components/ui/` (shadcn/ui base)
+- All custom components live in `/components/spekd/` — separate from `/components/ui/` (shadcn/ui base)
 - Custom components consume shadcn/ui primitives internally (e.g. `ClarificationCard` wraps `Input`, `Card`, `Collapsible`)
 - Design tokens from `globals.css` are used throughout — no hardcoded colour or spacing values
 - Each custom component exports a `variant` prop accepting `"default" | "developer"` where persona-sensitive behaviour is needed
@@ -920,21 +1047,33 @@ API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" 
 
 ### Implementation Roadmap
 
-**Phase 1 — Core creation flow (required for MVP launch):**
+**Build Phase 1 — Core creation flow (required for MVP launch):**
 1. `IssueTextarea` — entry point for every creation session
 2. `ClarificationCard` — the brand moment; must be perfect
 3. `StreamingIssueRenderer` — the wow moment; must stream correctly
 4. `GeneratedIssuePanel` — submission gate; must inspire confidence
-5. `SidebarNav` — orientation anchor for all creation flows
-
-**Phase 2 — Onboarding and repo management:**
+5. `SidebarNav` — orientation anchor for all creation and planning flows
 6. `OnboardingStep` — BYOK flow; critical for new user conversion
 7. `RepoScanProgress` — first-time repo add; trust-building moment
 
-**Phase 3 — Polish and admin:**
+**Build Phase 1 — Polish:**
 8. Template preview component (Priya's journey)
 9. Issue history list component
-10. Team settings panel components
+
+**Build Phase 2 — Planning workflow components *(future)*:**
+10. `PlanningWorkspaceNav` — planning-step sidebar (Idea → PRD → Architecture → UX → Epics); mirrors `SidebarNav` but for the planning flow
+11. `PlanningIdeaInput` — large chat-style textarea for initial product idea description; similar to `IssueTextarea` but framed for planning
+12. `PlanningClarificationCard` — reuses `ClarificationCard` pattern but with planning-specific context hints ("Based on your product idea…")
+13. `StreamingArtifactRenderer` — reuses `StreamingIssueRenderer` pattern for PRD/architecture/UX spec generation; streams section by section
+14. `ArtifactReviewPanel` — reuses `GeneratedIssuePanel` pattern; rendered markdown preview + inline editing; "Finalise" CTA instead of "Submit to GitHub"
+15. `ArtifactProgressStepper` — visual stepper showing completed artifacts with checkmarks and the current active step
+
+**Build Phase 2 — Team workspace components *(future)*:**
+16. `TeamCreateWizard` — team naming + initial configuration; `OnboardingStep` pattern reused
+17. `MemberInviteForm` — email/GitHub username input with bulk invite; invitation status per member (pending/accepted/declined)
+18. `RolePermissionManager` — role assignment UI (Owner/Admin/Member) with clear permission descriptions
+19. `TeamSettingsPanel` — default AI provider, planning method, and template configuration
+20. `SharedArtifactList` — team workspace artifact browser; shows all shared planning artifacts with status and last-edited metadata
 
 ---
 
@@ -942,7 +1081,7 @@ API key invalid → "Try copying it again" + link. Scan failed → "Retry scan" 
 
 ### Button Hierarchy
 
-IssueForge uses a three-tier button system applied consistently across all surfaces.
+Spekd uses a three-tier button system applied consistently across all surfaces.
 
 **Tier 1 — Primary (one per view)**
 
@@ -1067,10 +1206,11 @@ IssueForge uses a three-tier button system applied consistently across all surfa
 **No global navigation during creation:**
 - The main site nav is hidden during the issue creation flow — the sidebar is the only nav present
 - This is intentional: it reduces cognitive distraction and signals that the user is in a focused task mode
-- The IssueForge wordmark in the sidebar links to the dashboard (with confirmation if mid-flow)
+- The Spekd wordmark in the sidebar links to the dashboard (with confirmation if mid-flow)
 
 **Dashboard navigation:**
 - Top-level: "New Issue" CTA, "Repos" section, "Issue History" section, "Settings" link
+- *(future — Build Phase 2):* "New Project" CTA (launches Phase 0 planning), "Projects" section (lists planning projects with artifact status), "Teams" section (team workspace management)
 - No deep nesting — maximum two navigation levels anywhere in the product
 
 ---
@@ -1105,7 +1245,7 @@ IssueForge uses a three-tier button system applied consistently across all surfa
 **Dashboard — no repos connected:**
 - Illustrated empty state (simple SVG, not a stock illustration)
 - Heading: "Connect your first repo"
-- Sub-copy: "IssueForge needs access to a GitHub repo to start creating issues."
+- Sub-copy: "Spekd needs access to a GitHub repo to start creating issues."
 - Primary CTA: "Connect Repo"
 - No secondary actions cluttering the state
 
@@ -1117,6 +1257,21 @@ IssueForge uses a three-tier button system applied consistently across all surfa
 **Repo list — no issues found for a repo:**
 - Inline message within the repo card, not a full-page empty state
 - "No issues submitted for this repo yet."
+
+**Projects — no projects created** *(future — Build Phase 2):*
+- Heading: "Start your first project"
+- Sub-copy: "Projects help you plan before you build. Choose a planning method and Spekd will guide you from idea to actionable stories."
+- Primary CTA: "New Project"
+
+**Team workspace — no members yet** *(future — Build Phase 2):*
+- Heading: "Invite your team"
+- Sub-copy: "Add team members to share repos, planning artifacts, and maintain consistency."
+- Primary CTA: "Invite Members"
+
+**Team workspace — no shared repos** *(future — Build Phase 2):*
+- Heading: "Add a shared repo"
+- Sub-copy: "Shared repos let your team create issues from the same codebase context."
+- Primary CTA: "Add Repo"
 
 **Pattern rules:**
 - Empty states always include a single primary CTA that moves the user forward
@@ -1151,8 +1306,102 @@ IssueForge uses a three-tier button system applied consistently across all surfa
 
 **Design system integration note:**
 - All patterns above are implemented using shadcn/ui primitives where available
-- Custom behaviour (e.g. locked-width loading buttons, streaming cursor, scan progress steps) is implemented in the `/components/issueforge/` layer
+- Custom behaviour (e.g. locked-width loading buttons, streaming cursor, scan progress steps) is implemented in the `/components/spekd/` layer
 - Design tokens (`--primary`, `--destructive`, `--muted`, `--border`) are used consistently — no hardcoded colour values in component files
+
+---
+
+## Phase 0 Planning Workflow UX *(future — Build Phase 2)*
+
+### Planning Workflow Overview
+
+The Phase 0 (PLAN) experience guides non-technical users from a rough product idea to a complete set of planning artifacts. The UX reuses established Phase 1 patterns (conversational input, streaming generation, review-and-edit) but adapts them for a multi-step, multi-artifact planning workflow.
+
+**Core interaction model:** Describe → AI asks structured questions → artifact generates → user reviews and edits → proceed to next artifact. Each step builds on the previous, with visible progress and persistent context.
+
+### Information Architecture — Planning Workspace
+
+The planning workspace uses the same two-zone layout as issue creation: a persistent sidebar (left) with a main canvas (right).
+
+**Sidebar (planning mode):**
+- Project name and planning method badge
+- Artifact progress stepper: Idea → PRD → Architecture → UX Spec → Epics/Stories
+- Each step shows state: pending (muted), active (primary colour), complete (checkmark + success colour)
+- Completed steps are clickable — navigates back to review that artifact
+- Cannot skip ahead — forward progress is linear
+
+**Main canvas (planning mode):**
+- Active step content: either the idea input textarea, the clarification loop, the streaming artifact, or the review panel
+- Same max-width (720px) and centred layout as issue creation
+- Transitions between steps use the same fade-in/fade-out animation as `ClarificationCard`
+
+### Planning Clarification Loop
+
+The planning clarification loop follows the same UX pattern as the issue creation clarification loop, with these adaptations:
+
+- **More questions allowed.** Planning clarification may ask 3–7 questions per artifact (vs. max 3 for issues). Progress indicator shows "Question 3 of 5" to set expectations.
+- **Context hints reference the planning artifacts, not codebase.** Instead of "I noticed your repo has a BillingModule," planning hints say "Based on your product idea, it sounds like you have two user types…"
+- **Questions are grouped by artifact.** PRD-related questions focus on users, success criteria, and scope. Architecture questions focus on technical constraints and scale. UX questions focus on user journeys and interaction patterns.
+
+### Artifact Generation and Review
+
+Each planning artifact (PRD, Architecture, UX Spec, Epics) follows the same streaming generation and review pattern:
+
+1. **Transition state:** "Generating your PRD…" / "Generating architecture spec…" — same "Writing your issue…" pattern
+2. **Streaming output:** Artifact renders section by section. Same `StreamingIssueRenderer` pattern reused in `StreamingArtifactRenderer`.
+3. **Review panel:** Same `GeneratedIssuePanel` pattern reused in `ArtifactReviewPanel`. Rendered markdown preview + inline editing. CTA is "Finalise & Continue" instead of "Submit to GitHub."
+4. **Edit step:** All artifacts are fully editable before finalising. Users add domain knowledge the AI missed.
+5. **Persistence:** All artifacts are saved per-project. Users can leave and return without losing progress.
+
+### Phase 0 → Phase 1 Transition
+
+When users complete the planning workflow and click "Create Issues" from a story:
+
+- The UI transitions from the planning workspace to the Phase 1 issue creation flow
+- The sidebar switches from planning steps to issue creation steps
+- Planning context is injected automatically — the user does not need to do anything
+- A subtle "Planning context: GreenMatch Marketplace" badge appears in the sidebar, indicating enriched context is active
+
+---
+
+## Team Collaboration UX *(future — Build Phase 2)*
+
+### Team Workspace Overview
+
+The team workspace is an additive layer on top of individual Spekd usage. Individual users see no changes to their existing experience. Team features appear only when a user creates or joins a team.
+
+### Team Dashboard
+
+The team dashboard replaces the individual dashboard when a user switches to a team workspace (via a workspace switcher in the sidebar header):
+
+- **Workspace switcher:** Dropdown in sidebar header showing "Personal" and team workspaces. Current workspace is highlighted.
+- **Team dashboard sections:** Shared repos, shared planning projects (with artifact status), team members (with roles), recent team activity (issues created, artifacts updated).
+- **Admin-only sections:** Team settings (defaults, templates, AI provider), member management (invite, role assignment, removal).
+
+### Member Invitation Flow
+
+- **Input:** Email address or GitHub username. Bulk input supported (comma-separated or one per line).
+- **Validation:** GitHub usernames are verified against the GitHub API. Invalid usernames show inline error.
+- **Invitation states per member:** Pending (invitation sent, awaiting acceptance), Accepted (member is active), Declined (member rejected invitation).
+- **Notification:** Invited users receive an email with a link to accept. Acceptance adds them to the team workspace immediately.
+
+### Role-Based Permission UI
+
+Permissions are displayed clearly in the team settings panel:
+
+| Role | Can Create Issues | Can View Shared Repos | Can Manage Settings | Can Invite Members | Can Remove Members |
+|---|---|---|---|---|---|
+| Member | Yes | Yes | No | No | No |
+| Admin | Yes | Yes | Yes | Yes | No |
+| Owner | Yes | Yes | Yes | Yes | Yes |
+
+The role assignment UI uses a simple dropdown per member row: Owner / Admin / Member. Changes take effect immediately with a confirmation toast.
+
+### Shared Context UX
+
+- **Shared repos:** Repos added to the team workspace are visible to all members. Members can create issues against shared repos.
+- **Shared planning artifacts:** Planning projects created within the team workspace are visible to all members. Artifacts show last-edited timestamp and editor name.
+- **No real-time co-editing.** One person edits at a time. If another user opens an artifact for editing while someone else is editing, a warning is shown: "This artifact is being edited by [name]. Your changes may overwrite theirs." This is a pragmatic MVP constraint — real-time collaboration is a future enhancement.
 
 ---
 
@@ -1160,7 +1409,7 @@ IssueForge uses a three-tier button system applied consistently across all surfa
 
 ### Responsive Strategy
 
-IssueForge is a **desktop-primary, mobile-capable** product. The core creation flow (issue creation, clarification, generation, review) is optimised for desktop and tablet use — these are the sessions where a user is focused and has time to think. Mobile is a fully supported surface but is not the power path; it maps to lighter use cases (checking issue history, quick repo management, reading a generated issue before submitting).
+Spekd is a **desktop-primary, mobile-capable** product. The core creation flow (issue creation, clarification, generation, review) and the planning workflow (Phase 0) are optimised for desktop and tablet use — these are the sessions where a user is focused and has time to think. Mobile is a fully supported surface but is not the power path; it maps to lighter use cases (checking issue history, quick repo management, reading a generated issue before submitting, reviewing planning artifacts).
 
 **Desktop (1024px+):**
 Two-column layout is the primary format for the creation flow: `SidebarNav` (fixed 240px left) + main content area (flexible right). Maximum content width: `1280px` centred. Extra real estate is used to show contextual AI hints and the `GeneratedIssuePanel` at full fidelity — wide enough to show a well-formatted issue without scrolling.
@@ -1177,7 +1426,7 @@ The `SidebarNav` collapses entirely — a floating "progress pill" at the bottom
 
 ### Breakpoint Strategy
 
-IssueForge uses Tailwind CSS v4's default breakpoint scale, mobile-first:
+Spekd uses Tailwind CSS v4's default breakpoint scale, mobile-first:
 
 | Breakpoint | Token | Min-width | Layout behaviour |
 |---|---|---|---|
@@ -1281,7 +1530,7 @@ IssueForge uses Tailwind CSS v4's default breakpoint scale, mobile-first:
 - The sidebar's collapse/expand behaviour is driven by a React context (`SidebarContext`) so any component can respond to the collapsed state
 
 **Accessibility development:**
-- ARIA attributes are applied in the component layer (`/components/issueforge/`) — not patched on at the page level
+- ARIA attributes are applied in the component layer (`/components/spekd/`) — not patched on at the page level
 - `aria-live="polite"` for `StreamingIssueRenderer` — "assertive" is never used (too interruptive)
 - All `ClarificationCard` questions must have a stable `id` for `aria-describedby` on the answer input
 - Modal focus trap is handled via `@radix-ui/react-dialog` (already included in shadcn/ui) — do not implement custom focus traps
